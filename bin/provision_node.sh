@@ -64,7 +64,7 @@ EOF
   sudo sysctl --system
 fi
 
-KUBE_VERSION='1.21'
+KUBE_VERSION='1.21.1-00'
 sudo apt-get install -y kubelet="$KUBE_VERSION" kubeadm="$KUBE_VERSION" kubectl="$KUBE_VERSION"
 sudo apt-mark hold kubelet kubeadm kubectl
 
