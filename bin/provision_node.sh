@@ -32,6 +32,7 @@ fi
 >&2 "installing vim and httpie and other nice-to-have things"
 sudo apt install -y vim
 sudo apt install -y httpie
+sudo apt install -y git
 
 # turn off swap
 >&2 echo "turning off swap"
