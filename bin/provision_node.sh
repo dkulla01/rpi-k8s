@@ -21,7 +21,7 @@ echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https:/
 
 if [ ! -f "/usr/bin/docker" ]; then
   export VERSION='20.10.6'
-  >&2 echo "installing docker, version ${VERSION}"
+  echo >&2 "installing docker, version ${VERSION}"
   curl -sSL get.docker.com | sh && sudo usermod pi -aG docker
   unset VERSION
 else
@@ -29,20 +29,20 @@ else
 fi
 
 # install vim, httpie
->&2 "installing vim and httpie and other nice-to-have things"
+echo >&2 "installing vim and httpie and other nice-to-have things"
 sudo apt install -y vim
 sudo apt install -y httpie
 sudo apt install -y git
 
 # turn off swap
->&2 echo "turning off swap"
+echo >&2 "turning off swap"
 sudo dphys-swapfile swapoff
 sudo dphys-swapfile uninstall
 sudo update-rc.d dphys-swapfile remove
 sudo systemctl disable dphys-swapfile.service
 
 #enable cgroups on boot
->&2 echo "enabling cgroups"
+echo >&2 "enabling cgroups"
 sudo sed -i -e 's/$/ cgroup_enable=cpuset cgroup_memory=2 cgroup_enable=memory/' /boot/cmdline.txt
 
 
@@ -68,7 +68,7 @@ sudo apt-get install -y kubelet=1.21.0 kubeadm=1.21.0 kubectl 1.21.0
 sudo apt-mark hold kubelet kubeadm kubectl
 
 # add bashrc configuration
->&2 echo "adding alias k=kubectl to bashrc"
+echo >&2 "adding alias k=kubectl to bashrc"
 echo "alias k='kubectl'" >> "${HOME}/.bashrc"
 
->&2 echo "done installing all of the kube administrative things. reboot this machine now."
+echo >&2 "done installing all of the kube administrative things. reboot this machine now."
