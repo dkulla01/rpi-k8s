@@ -33,6 +33,7 @@ echo >&2 "installing vim and httpie and other nice-to-have things"
 sudo apt install -y vim
 sudo apt install -y httpie
 sudo apt install -y git
+sudo apt install -y nfs-common
 
 # turn off swap
 echo >&2 "turning off swap"
@@ -69,7 +70,14 @@ sudo apt-get install -y kubelet="$KUBE_VERSION" kubeadm="$KUBE_VERSION" kubectl=
 sudo apt-mark hold kubelet kubeadm kubectl
 
 # add bashrc configuration
-echo >&2 "adding alias k=kubectl to bashrc"
-echo "alias k='kubectl'" >> "${HOME}/.bashrc"
+if [ ! -f "$HOME/.bash_aliases" ]; then
+  echo >&2 "adding alias k=kubectl to bash_aliases"
+  echo "alias k='kubectl'" > "${HOME}/.bash_aliases"
+fi
+
+if [ ! -d '/mnt/ssd1' ]; then
+  echo >&2 " mounting the NFS filesystem from pi-a (10.0.0.1) to /mnt/ssd1"
+  sudo mount -t nfs -o proto=tcp,port=2049 10.0.0.1:/ /mnt
+fi
 
 echo >&2 "done installing all of the kube administrative things. reboot this machine now."
