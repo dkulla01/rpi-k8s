@@ -75,9 +75,19 @@ if [ ! -f "$HOME/.bash_aliases" ]; then
   echo "alias k='kubectl'" > "${HOME}/.bash_aliases"
 fi
 
-if [ ! -d '/mnt/ssd1' ]; then
-  echo >&2 " mounting the NFS filesystem from pi-a (10.0.0.1) to /mnt/ssd1"
-  sudo mount -t nfs -o proto=tcp,port=2049 10.0.0.1:/ /mnt
+if [ ! -d '/mnt/ssd1/home' ]; then
+  echo >&2 " mounting the NFS filesystem from pi-a (10.0.0.1) to /mnt/ssd1/home"
+  sudo mkdir -p '/mnt/ssd1/home'
+  sudo mount -t nfs -o proto=tcp,port=2049 10.0.0.1:/mnt/ssd1/export /mnt/ssd1/home
 fi
+
+FSTAB_ENTRY='10.0.0.1:/mnt/ssd1/export /mnt/ssd1/home nfs rw,user,soft 0 0'
+if grep "$FSTAB_ENTRY" '/etc/fstab'; then
+    echo >&2 'nfs entry already exists in /etc/fstab'
+else
+    echo "writing nfs entry into /etc/fstab to mount the NFS filesystem from pi-a on reboot"
+    echo "$FSTAB_ENTRY" | sudo tee -a /etc/fstab
+fi;
+
 
 echo >&2 "done installing all of the kube administrative things. reboot this machine now."
