@@ -27,7 +27,7 @@ sudo openssl x509 -req \
 -CA "${USER_CERTIFICATE_DIR}/ca.crt" \
 -CAkey "${USER_CERTIFICATE_DIR}/ca.key" \
 -CAcreateserial \
--in "${USER_CERTIFICATE_DIR}/dan.crt" \
+-out "${USER_CERTIFICATE_DIR}/dan.crt" \
 -days 3650
 
 # remove intermediate output
