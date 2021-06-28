@@ -8,8 +8,9 @@ KUBE_CA_DIR='/etc/kubernetes/pki'
 USER_CERTIFICATE_DIR="${KUBE_CA_DIR}/user_certs"
 BASH_CUSTOM_VARIABLES_FILE='.bash_custom_variables'
 
-sudo mkdir -p "$USER_CERTIFICATE_DIR"
-sudo cp "${KUBE_CA_DIR}/ca.*" "$USER_CERTIFICATE_DIR"
+if [ ! -d "$USER_CERTIFICATE_DIR" ]; then
+  sudo mkdir -p "$USER_CERTIFICATE_DIR"
+fi
 
 #Generate a dan.rsa rsa key
 sudo openssl genrsa -out "${USER_CERTIFICATE_DIR}/dan.key" 2048
@@ -24,8 +25,8 @@ sudo openssl req -new \
 # use the CSR to create an x509 cert
 sudo openssl x509 -req \
 -in "${USER_CERTIFICATE_DIR}/dan.csr" \
--CA "${USER_CERTIFICATE_DIR}/ca.crt" \
--CAkey "${USER_CERTIFICATE_DIR}/ca.key" \
+-CA "${KUBE_CA_DIR}/ca.crt" \
+-CAkey "${KUBE_CA_DIR}/ca.key" \
 -CAcreateserial \
 -out "${USER_CERTIFICATE_DIR}/dan.crt" \
 -days 3650
