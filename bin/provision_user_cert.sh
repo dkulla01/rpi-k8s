@@ -34,6 +34,10 @@ sudo openssl x509 -req \
 # remove intermediate output
 sudo rm -f "${USER_CERTIFICATE_DIR}/dan.csr"  "${USER_CERTIFICATE_DIR}/ca.srl"
 
+# make cert files visible to all users
+sudo chmod 644 "${USER_CERTIFICATE_DIR}/dan.crt"
+sudo chmod 644 "${USER_CERTIFICATE_DIR}/dan.key"
+
 if [ ! -f "${HOME}/${BASH_CUSTOM_VARIABLES_FILE}" ]; then
   touch "${HOME}/${BASH_CUSTOM_VARIABLES_FILE}"
 fi
