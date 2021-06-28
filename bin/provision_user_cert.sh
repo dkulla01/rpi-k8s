@@ -34,11 +34,11 @@ sudo openssl x509 -req \
 # remove intermediate output
 sudo rm -f "${USER_CERTIFICATE_DIR}/dan.csr"  "${USER_CERTIFICATE_DIR}/ca.srl"
 
-if [ ! -f "$HOME/${BASH_CUSTOM_VARIABLES}" ]; then
-  touch "$HOME/${BASH_CUSTOM_VARIABLES}"
+if [ ! -f "${HOME}/${BASH_CUSTOM_VARIABLES}" ]; then
+  touch "${HOME}/${BASH_CUSTOM_VARIABLES}"
 fi
 
-if ! grep -q CA_CRT_BASE64; then
+if ! grep -q 'CA_CRT_BASE64' "${HOME}/${BASH_CUSTOM_VARIABLES}"; then
  # let the base64 for the certificates get interpreted when we source the file,
  # not when we write to it
  # shellcheck disable=SC2016
