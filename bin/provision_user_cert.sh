@@ -25,13 +25,13 @@ sudo openssl req -new \
 sudo openssl x509 -req \
 -in "${USER_CERTIFICATE_DIR}/dan.csr" \
 -CA "${USER_CERTIFICATE_DIR}/ca.crt" \
--CAKey "${USER_CERTIFICATE_DIR}/ca.key" \
+-CAkey "${USER_CERTIFICATE_DIR}/ca.key" \
 -CAcreatserial \
 -in "${USER_CERTIFICATE_DIR}/dan.crt" \
 -days 3650
 
 # remove intermediate output
-rm "${USER_CERTIFICATE_DIR}/dan.csr"  "${USER_CERTIFICATE_DIR}/ca.srl"
+rm -f "${USER_CERTIFICATE_DIR}/dan.csr"  "${USER_CERTIFICATE_DIR}/ca.srl"
 
 if [ ! -f "$HOME/${BASH_CUSTOM_VARIABLES}" ]; then
   touch "$HOME/${BASH_CUSTOM_VARIABLES}"
