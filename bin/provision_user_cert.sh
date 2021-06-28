@@ -42,7 +42,7 @@ if ! grep -q 'CA_CRT_BASE64' "${HOME}/${BASH_CUSTOM_VARIABLES_FILE}"; then
  # let the base64 for the certificates get interpreted when we source the file,
  # not when we write to it
  # shellcheck disable=SC2016
- { echo 'export CA_CRT_BASE64=$(base64 "${USER_CERTIFICATE_DIR}/ca.crt")'; \
+ { echo 'export CA_CRT_BASE64=$(base64 "${KUBE_CA_DIR}/ca.crt")'; \
  echo 'export CLIENT_CRT_BASE64=$(base64 "${USER_CERTIFICATE_DIR}/dan.crt")'; \
- echo 'export CLIENT_KEY_BASE64=$(base64 "${USER_CERTIFICATE_DIR}/dan.kry")'; } >> "${HOME}/${BASH_CUSTOM_VARIABLES_FILE}"
+ echo 'export CLIENT_KEY_BASE64=$(base64 "${USER_CERTIFICATE_DIR}/dan.key")'; } >> "${HOME}/${BASH_CUSTOM_VARIABLES_FILE}"
 fi
