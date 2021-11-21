@@ -49,7 +49,7 @@ sudo sed -i -e 's/$/ cgroup_enable=cpuset cgroup_memory=2 cgroup_enable=memory/'
 
 
 ## let iptables see bridged traffic
-if [ ! -f "/stc/modules-load.d/k8s.conf" ]; then
+if [ ! -f "/etc/modules-load.d/k8s.conf" ]; then
   cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 br_netfilter
 EOF
